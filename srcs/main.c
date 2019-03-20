@@ -23,7 +23,10 @@ void    ft_draw(t_fractol e)
         x = 0;
         while (x < e.v.image_w)
         {
-            init_variables(&e, x, y);
+            if (ft_strcmp(e.fractale, "mandelbrot") == 0)
+                mandelbrot(&e, x, y);
+            if (ft_strcmp(e.fractale, "julia") == 0)
+                julia(&e, x, y);
             x++;
         }
         y++;
@@ -33,12 +36,19 @@ void    ft_draw(t_fractol e)
 
 void	init_mlx(t_fractol e)
 {
-
-    e.v.x = 0;
-    e.v.y = 0;
+    if (ft_strcmp(e.fractale, "mandelbrot") == 0)
+    {
+        e.v.x = -2.1;
+        e.v.y = -1.2;
+    }
+    if (ft_strcmp(e.fractale, "julia") == 0)
+    {
+        e.v.x = -1;
+        e.v.y = -1.2;
+    }
     e.v.image_h = (1.2 + 1.2) * ZOOM;
 	e.v.image_w = (0.6 + 2.1) * ZOOM;
-    e.v.max_iteration = 50;
+    e.v.max_iteration = 51;
     e.mlx = mlx_init();
     e.win = mlx_new_window(e.mlx, WIN_WIDTH, WIN_HEIGHT, "fractol");
     e.img.img = mlx_new_image(e.mlx, e.v.image_w, e.v.image_h);
