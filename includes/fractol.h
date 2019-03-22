@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tigondol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/22 13:21:47 by tigondol          #+#    #+#             */
+/*   Updated: 2019/03/22 13:21:53 by tigondol         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FRACTOL_H
 # define FRACTOL_H
 # include <stdio.h>
@@ -18,20 +30,12 @@ typedef struct		s_var
 {
 	float	x;
 	float	y;
-	double	x1;
-	double	x2;
-	double	xdiff;
-	double	y1;
-	double	y2;
-	double	ydiff;
-	double	c_reel;
-	double	c_imaginaire;
-	double	z_reel;
-	double	z_imaginaire;
+	double	x0;
+	double	y0;
 	int		i;
 	double	tmp;
 	double	zoom;
-	int		max;
+	// int		max;
 	double	image_w;
 	double	image_h;
 	int		image_x;
@@ -54,16 +58,7 @@ typedef struct		s_data
 	int		y;
 	int 	color;
 }					t_data;
-/*
-**	mouse mvm params
-*/
-typedef struct		s_mouse
-{
-	int		x;
-	int		y;
-	int		x_mid;
-	int		y_mid;
-}					t_mouse;
+
 typedef struct		s_fractol
 {
 	void		*mlx;
@@ -71,33 +66,26 @@ typedef struct		s_fractol
 	char		*fractale;
 	t_data		img;
 	t_var		v;
-	t_mouse		mouse;
 }					t_fractol;
 /*
-**	event.c
+**	key_tools.c
 */
-void				move_img(t_fractol *e, t_data *black_screen,
-int dx, int dy);
 int					key_hook(int keycode, t_fractol *e);
-int					mouse_hook(int button, int x, int y, void *param);
-void				zoomer(t_fractol *mlx, t_data *black_screen, double value);
-void				change_screen(t_fractol *mlx, t_data *e);
-int					mouse_mvm(int x, int y, t_fractol *e);
+int 				mouse_mvm(int x, int y, t_fractol *e);
+int 				mouse_zoom(int keycode, int x, int y, t_fractol *e);
 /*
-**	cleaners.c
+**	cleane_exit.c
 */
 void				clean_exit(t_fractol *e);
-void				clean_screen(t_fractol *mlx, t_data *e);
 /*
-**	algos.c
+**	fractal.c
 */
 void				mandelbrot(t_fractol *e, int Px, int Py);
-// void				mandelbrot(t_fractol *e);
 void				julia(t_fractol *e, int Px, int Py);
-// void				shuriken(t_fractol *e);
+void				shuriken(t_fractol *e, int Px, int Py);
 void				init_fractale(t_fractol *e);
 /*
-**	fdf.c
+**	main.c
 */
 void				init_mlx(t_fractol e);
 void    			ft_draw(t_fractol e);
