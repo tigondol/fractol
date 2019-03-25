@@ -59,9 +59,12 @@ void	init_mlx(t_fractol e)
 	e.v.image_h = WIN_HEIGHT;
 	e.v.image_w = WIN_WIDTH;
 	e.v.max_iteration = 51;
-	e.mlx = mlx_init();
-	e.win = mlx_new_window(e.mlx, WIN_WIDTH, WIN_HEIGHT, "fractol");
-	e.img.img = mlx_new_image(e.mlx, e.v.image_w, e.v.image_h);
+	if (!(e.mlx = mlx_init()))
+		exit(-1);
+	if (!(e.win = mlx_new_window(e.mlx, WIN_WIDTH, WIN_HEIGHT, "fractol")))
+		exit(-1);
+	if (!(e.img.img = mlx_new_image(e.mlx, e.v.image_w, e.v.image_h)))
+		exit(-1);
 	e.img.data = mlx_get_data_addr(e.img.img, &e.img.bpp,
 		&e.img.sizeline, &e.img.endian);
 	ft_draw(e);
@@ -75,11 +78,11 @@ int		main(int ac, char **av)
 {
 	t_fractol e;
 
-	if (ac != 2 || (ft_strcmp(av[1], "mandelbrot") &&
-				ft_strcmp(av[1], "julia") && ft_strcmp(av[1], "shuriken")))
+	if (ac != 2 || (ft_strcmp(av[1], "mandelbrot")
+			&& ft_strcmp(av[1], "julia") && ft_strcmp(av[1], "shuriken")))
 	{
 		ft_putstr("Usage : ./fractol fractal [mandelbrot - julia");
-		ft_putendl("- shuriken]");
+		ft_putendl(" - shuriken]");
 		return (-1);
 	}
 	e.fractale = av[1];
